@@ -44,7 +44,7 @@ jobs:
              # 发送邮件在成功时
 
       - name: Send email on success
-        if: steps.merge_step.outcome == 'success'
+        if: success()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.163.com # 你的SMTP服务器地址
