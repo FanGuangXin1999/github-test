@@ -13,6 +13,9 @@ jobs:
         with:
           ref: main # 检出dev分支
 
+-       name: Fetch dev branch
+        run: git fetch origin dev
+        
       - name: Merge dev into main
         run: |
           git config user.name "FanGuangXin"
@@ -30,7 +33,7 @@ jobs:
           password: ${{ vars.EMAIL_PASSWORD }} # 你的SMTP密码，存储在GitHub Secrets中
           subject: "从dev合并到main失败"
           to: ${{ vars.EMAIL_TO  }} # 收件人邮箱
-          from: vars.EMAIL # 发件人邮箱
+          from: ${{vars.EMAIL}} # 发件人邮箱
           body: |
             从开发到主分支的自动合并失败。
             请查看日志了解更多细节。
