@@ -12,6 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          token: ${{ secrets.APT }}
           fetch-depth: 0 # 获取所有分支和提交历史
           ref: dev
       # 设置 Git 用户信息
