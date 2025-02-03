@@ -8,19 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+        # 检出代码
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: main # 检出dev分支
-          
-      - name: Fetch dev branch
-        run: git fetch origin dev
+          fetch-depth: 0 # 获取所有分支和提交历史
 
-      - name: Merge dev into main
+      # 设置 Git 用户信息
+      - name: Set up Git user
         run: |
           git config user.name "FanGuangXin"
           git config user.email "18270985042@163.com"
-          git merge dev --no-ff -m "Automated merge from dev to main"
+
+      - name: Merge dev into main
+        run: |
+          git checkout main
+          git merge dev
           git push origin main
 
       - name: Send email on failure
