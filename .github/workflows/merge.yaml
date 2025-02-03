@@ -40,12 +40,12 @@ jobs:
           server_port: 465 # 你的SMTP服务器端口
           username: ${{ vars.EMAIL }} # 你的SMTP用户名
           password: ${{ vars.EMAIL_PASSWORD }} # 你的SMTP密码，存储在GitHub Secrets中
-          subject: ${{ success() && '从dev合并到main成功' || '从dev合并到main失败' }}
+          subject: ${{ steps.merge_step.outcome == 'success' && '从dev合并到main成功' || '从dev合并到main失败' }}
           to: ${{ vars.EMAIL_TO  }} # 收件人邮箱
           from: ${{vars.EMAIL}} # 发件人邮箱
           body: |
             ${{
-            success() && '从开发到主分支的自动合并成功。' || '从开发到主分支的自动合并失败, 请查看日志了解更多细节'
+            steps.merge_step.outcome == 'success' && '从开发到主分支的自动合并成功。' || '从开发到主分支的自动合并失败, 请查看日志了解更多细节'
             }}
             最近一条合并信息如下
             ${{ env.merge_info }}
