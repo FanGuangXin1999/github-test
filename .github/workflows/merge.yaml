@@ -12,10 +12,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main # 检出dev分支
-
--       name: Fetch dev branch
+-     - name: Fetch dev branch
         run: git fetch origin dev
-        
+
       - name: Merge dev into main
         run: |
           git config user.name "FanGuangXin"
