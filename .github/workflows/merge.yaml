@@ -1,8 +1,7 @@
 name: Merge dev to main
 
 on:
-  schedule:
-    - cron: "27 19 * * *" # 每天18点触发
+  workflow_dispatch: # 手动触发
 
 jobs:
   merge:
@@ -14,6 +13,9 @@ jobs:
         with:
           ref: dev # 检出dev分支
 
+      - name: Switch to main branch
+        run: git checkout main
+        
       - name: Merge dev into main
         run: |
           git config user.name "FanGuangXin"
