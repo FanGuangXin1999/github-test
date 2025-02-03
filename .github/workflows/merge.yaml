@@ -2,7 +2,7 @@ name: Merge dev to main
 
 on:
   schedule:
-    - cron: "9 19 * * *" # 每天18点触发
+    - cron: "30 19 * * *" # 每天18点触发
 
 jobs:
   merge:
