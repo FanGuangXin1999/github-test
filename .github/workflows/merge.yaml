@@ -26,11 +26,17 @@ jobs:
         run: |
           git checkout main
           git merge dev
-          echo "merge_info=$(git log -1 --pretty=format:'哈希值: %h 
+          git push origin main
+
+      # 获取合并信息
+      - name: Get merge information
+        id: get_merge_info
+        run: |
+          merge_info=$(git log --merges -5 --pretty=format:'哈希值: %h 
           提交者: %an 
           提交时间: %ar  
-          提交注释: %s')" >> $GITHUB_ENV
-          git push origin main
+          提交注释: %s' | tr '\n' '; ')
+          echo "merge_info=$merge_info" >> $GITHUB_ENV
 
       # 合并成功/失败后通知
       - name: Send email on failure
