@@ -32,7 +32,7 @@ jobs:
       - name: Get merge information
         id: get_merge_info
         run: |
-          merge_info=$(git log --merges -5 --pretty=format:'哈希值: %h 
+          merge_info=$(git log  -1 --pretty=format:'哈希值: %h 
           提交者: %an 
           提交时间: %ar  
           提交注释: %s' | tr '\n' '; ')
