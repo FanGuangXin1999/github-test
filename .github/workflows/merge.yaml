@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        # 检出代码
+      # 检出代码
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
@@ -24,7 +24,7 @@ jobs:
       - name: Merge dev into main
         run: |
           git checkout main
-          git merge dev --no-ff -m "Merge remote-tracking branch 'origin/dev'"
+          git merge dev
           git push origin main
 
       - name: Send email on failure
@@ -41,3 +41,20 @@ jobs:
           body: |
             从开发到主分支的自动合并失败。
             请查看日志了解更多细节。
+             # 发送邮件在成功时
+
+      - name: Send email on success
+        if: steps.merge_step.outcome == 'success'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.163.com # 你的SMTP服务器地址
+          server_port: 465 # 你的SMTP服务器端口
+          username: ${{ vars.EMAIL }} # 你的SMTP用户名
+          password: ${{ vars.EMAIL_PASSWORD }} # 你的SMTP密码，存储在GitHub Secrets中
+          subject: "从dev合并到main成功"
+          to: ${{ vars.EMAIL_TO }} # 收件人邮箱
+          from: ${{ vars.EMAIL }} # 发件人邮箱
+          body: |
+            从开发到主分支的自动合并成功。
+            合并信息如下：
+            ${{ steps.merge_step.outputs.merge_info }}
